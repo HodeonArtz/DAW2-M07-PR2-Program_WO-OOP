@@ -24,6 +24,19 @@
       echo "My new balance after deposit (+" . abs($amount) . ") : " . number_format($bank_account["balance"], 1);
       echo "<br>";
     }
+
+    function withdrawMoney(array $bank_account, int|float $amount) : void {
+      echo "Doing transaction withdrawal (-" . abs($amount) . ") with current balance " . number_format($bank_account["balance"], 1); 
+      echo "<br>";
+      if (($bank_account["balance"] - abs($amount)) < 0){
+        echo "Error transaction: Insufficient balance to complete withdrawal.";
+        echo "<br>";
+        return;
+      }
+      $bank_account["balance"] -= abs($amount);
+      echo "My new balance after deposit (-" . abs($amount) . ") : " . number_format($bank_account["balance"], 1);
+      echo "<br>";
+    }
   ?>
 </body>
 
