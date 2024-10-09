@@ -12,10 +12,12 @@
     $bank_account1 = [
       "balance"=> 400,
       "overdraft_limit"=> 0,
+      "opened" => true
     ];
     $bank_account2 = [
       "balance"=> 200,
       "overdraft_limit"=> 100,
+      "opened" => true
     ];
     function depositMoney(array $bank_account, int|float $amount) : void {
       echo "Doing transaction deposit (+" . abs($amount) . ") with current balance " . number_format($bank_account["balance"], 1); 
@@ -35,6 +37,26 @@
       }
       $bank_account["balance"] -= abs($amount);
       echo "My new balance after deposit (-" . abs($amount) . ") : " . number_format($bank_account["balance"], 1);
+      echo "<br>";
+    }
+    function openAccount(array $bank_account): void{
+      if($bank_account["opened"]){
+        echo "Error: Account is already opened";
+      echo "<br>";
+        return;
+      }
+      $bank_account["opened"] = true;
+      echo "My account is now reopened.";
+      echo "<br>";
+    }
+    function closeAccount(array $bank_account): void{
+      if(!$bank_account["opened"]){
+        echo "Error: Account is already closed";
+      echo "<br>";
+        return;
+      }
+      $bank_account["opened"] = false;
+      echo "My account is now closed.";
       echo "<br>";
     }
   ?>
