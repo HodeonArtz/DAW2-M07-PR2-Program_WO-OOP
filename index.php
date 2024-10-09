@@ -66,14 +66,17 @@
     function close_account(array $bank_account): void{
       if(!$bank_account["opened"]){
         echo "Error: Account is already closed";
-      echo "<br>";
+        echo "<br>";
         return;
       }
       $bank_account["opened"] = false;
       echo "My account is now closed.";
       echo "<br>";
     }
-
+    function display_balance($bank_account) : void {
+      echo "My balance : ". number_format($bank_account["balance"], 1);
+      echo "<br>";
+    }
   ?>
 </body>
 
