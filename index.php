@@ -19,7 +19,7 @@
       "overdraft_limit"=> 100,
       "opened" => true
     ];
-    function deposit_funds(array $bank_account, int|float $amount) : void {
+    function deposit_funds(array &$bank_account, int|float $amount) : void {
       echo "Doing transaction deposit (+" . abs($amount) . ") with current balance " . number_format($bank_account["balance"], 1); 
       echo "<br>";
       $bank_account["balance"] += abs($amount);
@@ -27,7 +27,7 @@
       echo "<br>";
     }
 
-    function withdraw_funds(array $bank_account, int|float $amount) : void {
+    function withdraw_funds(array &$bank_account, int|float $amount) : void {
       echo "Doing transaction withdrawal (-" . abs($amount) . ") with current balance " . number_format($bank_account["balance"], 1); 
       echo "<br>";
       if ($bank_account["overdraft_limit"] == 0 && ($bank_account["balance"] - abs($amount)) < 0){
@@ -55,23 +55,26 @@
       echo "My new balance after withdrawal (-" . abs($amount) . ") : " . number_format($bank_account["balance"], 1);
       echo "<br>";
     }
-    function open_account(array $bank_account): void{
+    function open_account(array &$bank_account): void{
+
       if($bank_account["opened"]){
         echo "Error: Account is already opened";
-      echo "<br>";
+        echo "<br>";
         return;
       }
-      $bank_account["opened"] = true;
+      $bank_account["opened"] |= true;
       echo "My account is now reopened.";
       echo "<br>";
     }
-    function close_account(array $bank_account): void{
+    function close_account(array &$bank_account): void{
+
+
       if(!$bank_account["opened"]){
         echo "Error: Account is already closed";
         echo "<br>";
         return;
       }
-      $bank_account["opened"] = false;
+      $bank_account["opened"] &= false;
       echo "My account is now closed.";
       echo "<br>";
     }
@@ -87,7 +90,16 @@
     withdraw_funds($bank_account1, 25);
     withdraw_funds($bank_account1, 600);
     close_account($bank_account1);
-    echo "---------------------------";
+    echo "--------------------------- <br>";
+
+    display_balance($bank_account2);
+    deposit_funds($bank_account2,100);
+    withdraw_funds($bank_account2, 300);
+    withdraw_funds($bank_account2, 50);
+    withdraw_funds($bank_account2, 120);
+    withdraw_funds($bank_account2, 20);
+    close_account($bank_account2);
+    close_account($bank_account2)
   ?>
 </body>
 
