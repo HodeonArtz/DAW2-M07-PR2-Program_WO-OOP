@@ -33,13 +33,15 @@
       if ($bank_account["overdraft_limit"] == 0 && ($bank_account["balance"] - abs($amount)) < 0){
         echo "Error transaction: Insufficient balance to complete withdrawal.";
         echo "<br>";
+        echo "My new balance after failed last transaction (-" . abs($amount) . ") : " . number_format($bank_account["balance"], 1);
+        echo "<br>";
         return;
       }
       if($bank_account["overdraft_limit"] > 0 && ($bank_account["balance"] - abs($amount)) < 0){
         if(abs($amount)>$bank_account["overdraft_limit"]){
           echo "Error transaction: Withdrawal esceeds overdraft limit.";
           echo "<br>";
-          echo "My new balance after failed withdrawal (-" . abs($amount) . ") : " . number_format($bank_account["balance"], 1);
+          echo "My new balance after failed last transaction (-" . abs($amount) . ") : " . number_format($bank_account["balance"], 1);
           echo "<br>";
           return;
         }
@@ -77,6 +79,15 @@
       echo "My balance : ". number_format($bank_account["balance"], 1);
       echo "<br>";
     }
+
+    display_balance($bank_account1);
+    close_account($bank_account1);
+    open_account($bank_account1);
+    deposit_funds($bank_account1,150);
+    withdraw_funds($bank_account1, 25);
+    withdraw_funds($bank_account1, 600);
+    close_account($bank_account1);
+    echo "---------------------------";
   ?>
 </body>
 
