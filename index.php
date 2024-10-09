@@ -16,8 +16,14 @@
     $bank_account2 = [
       "balance"=> 200,
       "overdraft_limit"=> 100,
-    ]
-    
+    ];
+    function depositMoney(array $bank_account, int|float $amount) : void {
+      echo "Doing transaction deposit (+" . abs($amount) . ") with current balance " . number_format($bank_account["balance"], 1); 
+      echo "<br>";
+      $bank_account["balance"] += abs($amount);
+      echo "My new balance after deposit (+" . abs($amount) . ") : " . number_format($bank_account["balance"], 1);
+      echo "<br>";
+    }
   ?>
 </body>
 
